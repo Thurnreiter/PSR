@@ -66,7 +66,7 @@ object MainView: TMainView
     FocusControl = ToggleSwitchIncludeETWAndXML
   end
   object lblWaiting: TLabel
-    Left = 119
+    Left = 151
     Top = 136
     Width = 111
     Height = 15
@@ -105,6 +105,7 @@ object MainView: TMainView
     Width = 319
     Height = 140
     TabOrder = 6
+    OnDblClick = memoOutputClick
   end
   object ToggleSwitchDC: TToggleSwitch
     Left = 272
@@ -144,5 +145,9 @@ object MainView: TMainView
     StateCaptions.CaptionOn = 'on'
     StateCaptions.CaptionOff = 'off'
     TabOrder = 2
+  end
+  object ActivityIndicatorSaving: TActivityIndicator
+    Left = 102
+    Top = 128
   end
 end

@@ -16,22 +16,24 @@ type
   TMainView = class(TForm)
     btnStart: TButton;
     btnStop: TButton;
-    Label1: TLabel;
+    edtMaxSC: TMaskEdit;
     memoOutput: TMemo;
     ToggleSwitchDC: TToggleSwitch;
     ToggleSwitchSC: TToggleSwitch;
     ToggleSwitchIncludeETWAndXML: TToggleSwitch;
+    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
-    edtMaxSC: TMaskEdit;
     Label6: TLabel;
     lblWaiting: TLabel;
+    ActivityIndicatorSaving: TActivityIndicator;
     procedure btnStartClick(Sender: TObject);
     procedure btnStopClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure memoOutputClick(Sender: TObject);
   private
     { Private-Deklarationen }
     FInnerPSRWrapper: IPSRWrapper;
@@ -44,6 +46,11 @@ var
 
 implementation
 
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  WinApi.ShellAPI;
+
 {$R *.dfm}
 
 procedure TMainView.FormCreate(Sender: TObject);
@@ -54,6 +61,29 @@ end;
 procedure TMainView.FormDestroy(Sender: TObject);
 begin
   FInnerPSRWrapper := nil;
+end;
+
+procedure TMainView.memoOutputClick(Sender: TObject);
+var
+  CurrentLineNumber: Integer;
+  OuputFileName: TFileName;
+begin
+  CurrentLineNumber := SendMessage(memoOutput.Handle, EM_LINEFROMCHAR, memoOutput.SelStart, 0);
+  //  CurrentLineNumber := memoOutput.Perform(EM_LINEFROMCHAR, -1, 0);
+  memoOutput.SelStart := memoOutput.Perform(EM_LINEINDEX, CurrentLineNumber, 0);
+  memoOutput.SelLength := Length(memoOutput.Lines[CurrentLineNumber]);
+
+  OuputFileName := memoOutput.Lines[CurrentLineNumber];
+  if (not String(OuputFileName).IsEmpty)  then
+  begin
+    WinApi.ShellAPI.ShellExecute(
+      Handle,
+      'OPEN',
+      PChar('explorer.exe'),
+      PChar('/select, "' + OuputFileName + '"'),
+      nil,
+      SW_NORMAL);
+  end;
 end;
 
 procedure TMainView.btnStartClick(Sender: TObject);
@@ -79,6 +109,7 @@ procedure TMainView.btnStopClick(Sender: TObject);
 begin
   btnStop.Enabled := False;
   lblWaiting.Visible := True;
+  ActivityIndicatorSaving.Animate := True;
 
   FInnerPSRWrapper.Stop;
   if (FInnerPSRWrapper.Output.IsEmpty) then
@@ -91,6 +122,7 @@ begin
   end;
 
   lblWaiting.Visible := False;
+  ActivityIndicatorSaving.Animate := False;
   ToggleSwitchDC.Enabled := True;
   ToggleSwitchSC.Enabled := True;
   ToggleSwitchIncludeETWAndXML.Enabled := True;
