@@ -1,29 +1,44 @@
 unit System.PSRWrapper;
 
 interface
+
+{$REGION 'Info'}
 {
-psr.exe [/start |/stop][/output ] [/sc (0|1)] [/maxsc ] [/sketch (0|1)] [/slides (0|1)] [/gui (o|1)] [/arcetl (0|1)] [/arcxml (0|1)] [/arcmht (0|1)] [/stopevent ] [/maxlogsize ] [/recordpid ]
+  psr.exe
+    [/start |/stop]
+    [/output ]
+    [/sc (0|1)]
+    [/maxsc ]
+    [/sketch (0|1)]
+    [/slides (0|1)]
+    [/gui (o|1)]
+    [/arcetl (0|1)]
+    [/arcxml (0|1)]
+    [/arcmht (0|1)]
+    [/stopevent ]
+    [/maxlogsize ]
+    [/recordpid ]
 
-Command Line Parameters fÃ¼r PSR:
-  /start      : Start Recording. (Outputpath flag SHOULD be specified) /stop : Stop Recording.
-  /sc         : Capture screenshots for recorded steps.
-  /maxsc      : Maximum number of recent screen captures.
-  /maxlogsize : Maximum log file size (in MB) before wrapping occurs.
-  /gui        : Display control GUI.
-  /arcetl     : Include raw ETW file in archive output.
-  /arcxml     : Include MHT file in archive output.
-  /recordpid  : Record all actions associated with given PID.
-  /sketch     : Sketch UI if no screenshot was saved.
-  /slides     : Create slide show HTML pages.
-  /output     : Store output of record session in given path.
-  /stopevent  : Event to signal after output files are generated.
+  Command Line Parameters für PSR:
+    /start      : Start Recording. (Outputpath flag SHOULD be specified) /stop : Stop Recording.
+    /sc         : Capture screenshots for recorded steps.
+    /maxsc      : Maximum number of recent screen captures.
+    /maxlogsize : Maximum log file size (in MB) before wrapping occurs.
+    /gui        : Display control GUI.
+    /arcetl     : Include raw ETW file in archive output.
+    /arcxml     : Include MHT file in archive output.
+    /recordpid  : Record all actions associated with given PID.
+    /sketch     : Sketch UI if no screenshot was saved.
+    /slides     : Create slide show HTML pages.
+    /output     : Store output of record session in given path.
+    /stopevent  : Event to signal after output files are generated.
 
-PSR.EXE /START /OUTPUT "C:\Users\nt\AppData\Local\Temp\_nt.zip" /SC 1 /MAXSC 999 /GUI 1 /arcetl 1 /arcxml 1
-PSR.EXE /START /OUTPUT "C:\Temp\002\_nt.zip" /SC 1 /MAXSC 999 /GUI 1 /arcetl 1 /arcxml 1 /slides 1 /sketch 1
-PSR.EXE /START /OUTPUT "C:\Temp\002\_nt.zip" /SC 1 /MAXSC 999 /GUI 0
-PSR.EXE /STOP
-
+  PSR.EXE /START /OUTPUT "C:\Users\nt\AppData\Local\Temp\_nt.zip" /SC 1 /MAXSC 999 /GUI 1 /arcetl 1 /arcxml 1
+  PSR.EXE /START /OUTPUT "C:\Temp\002\_nt.zip" /SC 1 /MAXSC 999 /GUI 1 /arcetl 1 /arcxml 1 /slides 1 /sketch 1
+  PSR.EXE /START /OUTPUT "C:\Temp\002\_nt.zip" /SC 1 /MAXSC 999 /GUI 0
+  PSR.EXE /STOP
 }
+{$ENDREGION}
 
 type
   IPSRWrapper = interface(IInvokable)
@@ -112,7 +127,7 @@ begin
   FDisplayControlGUI := False;
   FOutput := String.Empty;
   FIsRecording := False;
-//  FProcessHandle := 0;
+  //  FProcessHandle := 0;
 end;
 
 destructor TPSRWrapper.Destroy;
@@ -159,12 +174,6 @@ begin
   Result := FOutput;
 end;
 
-//function TPSRWrapper.Output(const Value: String): IPSRWrapper;
-//begin
-//  FOutput := Value;
-//  Result := Self;
-//end;
-
 function TPSRWrapper.ProcessExists(): Boolean;
 var
   ContinueLoop: BOOL;
@@ -189,13 +198,13 @@ begin
   CloseHandle(FSnapshotHandle);
 end;
 
+{$REGION 'Tests'}
 //function TPSRWrapper.ExecuteProgAndWait(const AParam: string): Boolean;
 //var
 //  SEInfo: TShellExecuteInfo;
 //  ExitCode: DWORD;
 //  Return: Boolean;
 //begin
-//Writeln('1');
 //  FillChar(SEInfo, SizeOf(SEInfo), #0);
 //  SEInfo.LpVerb := 'open';
 //  SEInfo.cbSize := SizeOf(TShellExecuteInfo);
@@ -207,23 +216,15 @@ end;
 //  SEInfo.lpParameters := PChar(AParam);
 //  //  SEInfo.nShow := SW_SHOWNORMAL;
 //  //  SEInfo.LpDirectory := PChar(TPath.GetDirectoryName('PSR.EXE'));
-//Writeln('2');
 //  Return := WinApi.ShellAPI.ShellExecuteEx(@SEInfo);
-//Writeln('3');
 //
 //
 //  if (Return) and (SEInfo.HProcess <> 0) then
 //  begin
-//Writeln('4');
 //    WaitForSingleObject(SEInfo.HProcess, INFINITE);
-//Writeln('5');
 //    GetExitCodeProcess(SEInfo.HProcess, ExitCode);
-//Writeln('6');
 //    CloseHandle(SEInfo.HProcess);
-//Writeln('7');
 //  end;
-//
-//Writeln('8');
 //
 ////  if (Return and (SEInfo.HProcess <> 0)) then
 ////  begin
@@ -240,8 +241,7 @@ end;
 ////    Exit(False);
 ////  end;
 //end;
-
-
+{$ENDREGION}
 
 procedure TPSRWrapper.ExecuteProgAndWait(const AParams: string);
 var
@@ -259,7 +259,7 @@ begin
     RaiseLastOSError();
   end;
 {$ELSE}
-  raise ENotImplemented.Create('Wrapper IProcess ShellExecute not implemented.');
+  raise ENotImplemented.Create('WinApi.ShellAPI.ShellExecute not implemented.');
 {$ENDIF}
 end;
 
