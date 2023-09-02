@@ -4,7 +4,7 @@ interface
 {
 psr.exe [/start |/stop][/output ] [/sc (0|1)] [/maxsc ] [/sketch (0|1)] [/slides (0|1)] [/gui (o|1)] [/arcetl (0|1)] [/arcxml (0|1)] [/arcmht (0|1)] [/stopevent ] [/maxlogsize ] [/recordpid ]
 
-Command Line Parameters für PSR:
+Command Line Parameters fÃ¼r PSR:
   /start      : Start Recording. (Outputpath flag SHOULD be specified) /stop : Stop Recording.
   /sc         : Capture screenshots for recorded steps.
   /maxsc      : Maximum number of recent screen captures.
@@ -22,9 +22,6 @@ PSR.EXE /START /OUTPUT "C:\Users\nt\AppData\Local\Temp\_nt.zip" /SC 1 /MAXSC 999
 PSR.EXE /START /OUTPUT "C:\Temp\002\_nt.zip" /SC 1 /MAXSC 999 /GUI 1 /arcetl 1 /arcxml 1 /slides 1 /sketch 1
 PSR.EXE /START /OUTPUT "C:\Temp\002\_nt.zip" /SC 1 /MAXSC 999 /GUI 0
 PSR.EXE /STOP
-
-http://shortfastcode.blogspot.com/2013/04/problem-steps-recorder-command-line.html
-https://stackoverflow.com/questions/8512730/how-to-integrate-problem-steps-recorder-psr-in-my-application
 
 }
 
