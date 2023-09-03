@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{430619FB-232B-4369-A3C8-4099BC8E6406}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="demos\PSRWrapperConsole.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="demos\PSRWrapperVCL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="tests\PSRTests.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="PSRWrapperConsole">
+        <MSBuild Projects="demos\PSRWrapperConsole.dproj"/>
+    </Target>
+    <Target Name="PSRWrapperConsole:Clean">
+        <MSBuild Projects="demos\PSRWrapperConsole.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PSRWrapperConsole:Make">
+        <MSBuild Projects="demos\PSRWrapperConsole.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PSRWrapperVCL">
+        <MSBuild Projects="demos\PSRWrapperVCL.dproj"/>
+    </Target>
+    <Target Name="PSRWrapperVCL:Clean">
+        <MSBuild Projects="demos\PSRWrapperVCL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PSRWrapperVCL:Make">
+        <MSBuild Projects="demos\PSRWrapperVCL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PSRTests">
+        <MSBuild Projects="tests\PSRTests.dproj"/>
+    </Target>
+    <Target Name="PSRTests:Clean">
+        <MSBuild Projects="tests\PSRTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PSRTests:Make">
+        <MSBuild Projects="tests\PSRTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="PSRWrapperConsole;PSRWrapperVCL;PSRTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="PSRWrapperConsole:Clean;PSRWrapperVCL:Clean;PSRTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="PSRWrapperConsole:Make;PSRWrapperVCL:Make;PSRTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
