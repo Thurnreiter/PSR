@@ -10,7 +10,8 @@ uses
   Vcl.Forms,
   Vcl.StdCtrls,
   Vcl.WinXCtrls,
-  Vcl.Mask;
+  Vcl.Mask,
+  Vcl.ExtCtrls;
 
 type
   TMainView = class(TForm)
@@ -29,11 +30,16 @@ type
     Label6: TLabel;
     lblWaiting: TLabel;
     ActivityIndicatorSaving: TActivityIndicator;
+    btnExtractor: TButton;
+    Bevel1: TBevel;
+    edtExtractorOutputFrom: TLabeledEdit;
+    edtExtractorOutputTo: TLabeledEdit;
     procedure btnStartClick(Sender: TObject);
     procedure btnStopClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure memoOutputClick(Sender: TObject);
+    procedure btnExtractorClick(Sender: TObject);
   private
     { Private-Deklarationen }
     FInnerPSRWrapper: IPSRWrapper;
@@ -47,6 +53,8 @@ var
 implementation
 
 uses
+  System.IOUtils,
+  System.MHT.ImageExtractor,
   Winapi.Windows,
   Winapi.Messages,
   WinApi.ShellAPI;
@@ -56,6 +64,8 @@ uses
 procedure TMainView.FormCreate(Sender: TObject);
 begin
   FInnerPSRWrapper := TPSRWrapper.Create;
+  edtExtractorOutputFrom.Text := 'C:\Temp\002\tmp795.zip';
+  edtExtractorOutputTo.Text := 'C:\Temp\002';
 end;
 
 procedure TMainView.FormDestroy(Sender: TObject);
@@ -84,6 +94,20 @@ begin
       nil,
       SW_NORMAL);
   end;
+
+  edtExtractorOutputFrom.Text := OuputFileName;
+  edtExtractorOutputTo.Text := TPath.GetDirectoryName(OuputFileName);
+end;
+
+procedure TMainView.btnExtractorClick(Sender: TObject);
+var
+  ImgExtractor: IMHTImageExtractor;
+begin
+  ImgExtractor := TMHTImageExtractor.Create;
+  ImgExtractor
+    .FromFile(edtExtractorOutputFrom.Text)
+    .ToPath(edtExtractorOutputTo.Text)
+    .Extract;
 end;
 
 procedure TMainView.btnStartClick(Sender: TObject);

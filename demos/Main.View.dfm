@@ -5,7 +5,7 @@ object MainView: TMainView
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Problem Step Recorder'
-  ClientHeight = 360
+  ClientHeight = 452
   ClientWidth = 368
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -80,6 +80,12 @@ object MainView: TMainView
     ParentFont = False
     Visible = False
   end
+  object Bevel1: TBevel
+    Left = 24
+    Top = 344
+    Width = 319
+    Height = 2
+  end
   object btnStart: TButton
     Left = 268
     Top = 132
@@ -149,5 +155,38 @@ object MainView: TMainView
   object ActivityIndicatorSaving: TActivityIndicator
     Left = 102
     Top = 128
+  end
+  object btnExtractor: TButton
+    Left = 268
+    Top = 414
+    Width = 75
+    Height = 25
+    Caption = 'Extractor'
+    TabOrder = 8
+    OnClick = btnExtractorClick
+  end
+  object edtExtractorOutputFrom: TLabeledEdit
+    Left = 56
+    Top = 356
+    Width = 287
+    Height = 23
+    EditLabel.Width = 26
+    EditLabel.Height = 23
+    EditLabel.Caption = 'from'
+    LabelPosition = lpLeft
+    TabOrder = 9
+    Text = ''
+  end
+  object edtExtractorOutputTo: TLabeledEdit
+    Left = 56
+    Top = 385
+    Width = 287
+    Height = 23
+    EditLabel.Width = 11
+    EditLabel.Height = 23
+    EditLabel.Caption = 'to'
+    LabelPosition = lpLeft
+    TabOrder = 10
+    Text = ''
   end
 end

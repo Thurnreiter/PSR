@@ -5,7 +5,8 @@ uses
   Main.View in 'Main.View.pas' {MainView},
   Vcl.Themes,
   Vcl.Styles,
-  System.PSRWrapper in '..\System.PSRWrapper.pas';
+  System.PSRWrapper in '..\System.PSRWrapper.pas',
+  System.MHT.ImageExtractor in '..\System.MHT.ImageExtractor.pas';
 
 {$R *.res}
 
