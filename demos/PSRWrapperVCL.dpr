@@ -6,7 +6,7 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   System.PSRWrapper in '..\System.PSRWrapper.pas',
-  System.MHT.ImageExtractor in '..\System.MHT.ImageExtractor.pas';
+  System.MHT.FileExtractor in '..\System.MHT.FileExtractor.pas';
 
 {$R *.res}
 

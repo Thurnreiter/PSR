@@ -54,7 +54,7 @@ implementation
 
 uses
   System.IOUtils,
-  System.MHT.ImageExtractor,
+  System.MHT.FileExtractor,
   Winapi.Windows,
   Winapi.Messages,
   WinApi.ShellAPI;
@@ -101,9 +101,9 @@ end;
 
 procedure TMainView.btnExtractorClick(Sender: TObject);
 var
-  ImgExtractor: IMHTImageExtractor;
+  ImgExtractor: IMHTFileExtractor;
 begin
-  ImgExtractor := TMHTImageExtractor.Create;
+  ImgExtractor := TMHTFileExtractor.Create;
   ImgExtractor
     .FromFile(edtExtractorOutputFrom.Text)
     .ToPath(edtExtractorOutputTo.Text)

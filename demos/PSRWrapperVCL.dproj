@@ -130,7 +130,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\System.PSRWrapper.pas"/>
-        <DCCReference Include="..\System.MHT.ImageExtractor.pas"/>
+        <DCCReference Include="..\System.MHT.FileExtractor.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

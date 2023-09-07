@@ -10,11 +10,10 @@ uses
   TestInsight.DUnitX,
   {$ELSE}
   DUnitX.Loggers.Console,
-  DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
   Test.MHT.Extractor in 'Test.MHT.Extractor.pas',
-  System.MHT.ImageExtractor in '..\System.MHT.ImageExtractor.pas';
+  System.MHT.FileExtractor in '..\System.MHT.FileExtractor.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

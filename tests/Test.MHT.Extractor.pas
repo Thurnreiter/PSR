@@ -4,7 +4,7 @@ interface
 
 uses
   DUnitX.TestFramework,
-  System.MHT.ImageExtractor;
+  System.MHT.FileExtractor;
 
 type
   [TestFixture]
@@ -12,7 +12,7 @@ type
   strict private
     FMHTFile: string;
     FMHTZipFile: string;
-    FSut: IMHTImageExtractor;
+    FSut: IMHTFileExtractor;
   private
     const CTestMHT = '..\..\Recording_20230902_1219.mht';
     const CTestMHTZip = '..\..\tmp6EF2.zip';
@@ -41,7 +41,7 @@ begin
   FMHTFile := TPath.Combine(TPath.GetLibraryPath(), CTestMHT);
   FMHTZipFile := TPath.Combine(TPath.GetLibraryPath(), CTestMHTZip);
 
-  FSut := TMHTImageExtractor.Create;
+  FSut := TMHTFileExtractor.Create;
 end;
 
 procedure TMyTestObject.TearDown;
