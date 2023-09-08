@@ -6,7 +6,9 @@ program PSRWrapperConsole;
 
 uses
   System.SysUtils,
-  System.PSRWrapper in '..\System.PSRWrapper.pas';
+  System.PSRWrapper in '..\System.PSRWrapper.pas',
+  System.MHT.RecordingXML in '..\System.MHT.RecordingXML.pas',
+  System.MHT.RecordingXMLToFile in '..\System.MHT.RecordingXMLToFile.pas';
 
 var
   StopRecording: string;

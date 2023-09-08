@@ -65,7 +65,7 @@ begin
     .FromFile(FMHTFile)
     .ToPath(TPath.GetLibraryPath());
 
-  Assert.IsTrue(FSut.Extract);
+  Assert.IsNotEmpty(FSut.Extract);
 end;
 
 
@@ -75,7 +75,7 @@ begin
     .FromFile(FMHTZipFile)
     .ToPath(TPath.GetLibraryPath());
 
-  Assert.IsTrue(FSut.Extract);
+  Assert.IsNotEmpty(FSut.Extract);
 end;
 
 initialization

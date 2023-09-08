@@ -11,7 +11,8 @@ uses
   Vcl.StdCtrls,
   Vcl.WinXCtrls,
   Vcl.Mask,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls,
+  Vcl.Dialogs;
 
 type
   TMainView = class(TForm)
@@ -34,12 +35,15 @@ type
     Bevel1: TBevel;
     edtExtractorOutputFrom: TLabeledEdit;
     edtExtractorOutputTo: TLabeledEdit;
+    OpenDialog: TOpenDialog;
+    BtnOpen: TButton;
     procedure btnStartClick(Sender: TObject);
     procedure btnStopClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure memoOutputClick(Sender: TObject);
     procedure btnExtractorClick(Sender: TObject);
+    procedure BtnOpenClick(Sender: TObject);
   private
     { Private-Deklarationen }
     FInnerPSRWrapper: IPSRWrapper;
@@ -55,6 +59,8 @@ implementation
 uses
   System.IOUtils,
   System.MHT.FileExtractor,
+  System.MHT.RecordingXML,
+  System.MHT.RecordingXMLToFile,
   Winapi.Windows,
   Winapi.Messages,
   WinApi.ShellAPI;
@@ -101,13 +107,44 @@ end;
 
 procedure TMainView.btnExtractorClick(Sender: TObject);
 var
+  RecordingXmlParser: IMHTRecordingXmlParser;
+  ListOfActions: TArray<TEachAction>;
+  RecordingXmlToFile: IMHTRecordingXmlToFile;
   ImgExtractor: IMHTFileExtractor;
+  Return: string;
 begin
   ImgExtractor := TMHTFileExtractor.Create;
-  ImgExtractor
+  Return := ImgExtractor
     .FromFile(edtExtractorOutputFrom.Text)
     .ToPath(edtExtractorOutputTo.Text)
     .Extract;
+
+  var XmlFile := TDirectory.GetFiles(Return, 'RecordingXML*.xml');
+  if (Length(XmlFile) > 0) and (TFile.Exists(XmlFile[0])) then
+  begin
+    RecordingXmlParser := TMHTRecordingXmlParser.Create;
+    ListOfActions := RecordingXmlParser.Xml(TFile.ReadAllText(XmlFile[0])).Execute;
+
+    RecordingXmlToFile := TMHTRecordingXmlToFile.Create;
+    RecordingXmlToFile
+      .RecordEachAction(ListOfActions)
+      .Filename(TPath.ChangeExtension(XmlFile[0], 'csv'))
+      .SaveToCSV;
+  end;
+end;
+
+procedure TMainView.BtnOpenClick(Sender: TObject);
+begin
+  if TFile.Exists(edtExtractorOutputTo.Text) then
+  begin
+    OpenDialog.InitialDir := TPath.GetDirectoryName(edtExtractorOutputTo.Text);
+  end;
+
+  if OpenDialog.Execute then
+  begin
+    edtExtractorOutputFrom.Text := OpenDialog.FileName;
+    edtExtractorOutputTo.Text := TPath.GetDirectoryName(OpenDialog.FileName);
+  end;
 end;
 
 procedure TMainView.btnStartClick(Sender: TObject);

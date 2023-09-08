@@ -14,7 +14,7 @@ type
     function ToPath(const Value: string): IMHTFileExtractor; overload;
     function ToPath(): string; overload;
 
-    function Extract(): Boolean;
+    function Extract(): string;
   end;
 
   TMHTFileExtractor = class(TInterfacedObject, IMHTFileExtractor)
@@ -39,7 +39,7 @@ type
     function ToPath(const Value: string): IMHTFileExtractor; overload;
     function ToPath(): string; overload;
 
-    function Extract(): Boolean;
+    function Extract(): string;
   end;
 
 implementation
@@ -75,10 +75,10 @@ begin
   Result := FToPath;
 end;
 
-function TMHTFileExtractor.Extract: Boolean;
+function TMHTFileExtractor.Extract: string;
 begin
   if (not TFile.Exists(FFromFile)) then
-    Exit(False);
+    Exit(string.Empty);
 
   //  var ExtractPath := TPath.Combine(TPath.GetLibraryPath(), 'New');
   FExtractPath := TPath.Combine(FToPath, TPath.GetFileNameWithoutExtension(FFromFile));
@@ -91,7 +91,7 @@ begin
     TZipFile.ExtractZipFile(FFromFile, FExtractPath);
     var MhtFiles := TDirectory.GetFiles(FExtractPath, '*.mht*');
     if (Length(MhtFiles) = 0) then
-      Exit(False);
+      Exit(string.Empty);
 
     MhtFile := MhtFiles[0]; //  Fix, get the first file...
   end
@@ -101,7 +101,7 @@ begin
   end;
 
   ExtractMhtBoundary(TFile.ReadAllText(MhtFile));
-  Result := True;
+  Result := FExtractPath;
 end;
 
 procedure TMHTFileExtractor.ExtractMhtBoundary(const MhtContent: string);

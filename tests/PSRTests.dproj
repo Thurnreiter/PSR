@@ -90,6 +90,9 @@
         </DelphiCompile>
         <DCCReference Include="Test.MHT.Extractor.pas"/>
         <DCCReference Include="..\System.MHT.FileExtractor.pas"/>
+        <DCCReference Include="..\System.MHT.RecordingXML.pas"/>
+        <DCCReference Include="Test.MHT.RecordingXML.pas"/>
+        <DCCReference Include="..\System.MHT.RecordingXMLToFile.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

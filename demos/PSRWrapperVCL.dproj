@@ -131,6 +131,8 @@
         </DCCReference>
         <DCCReference Include="..\System.PSRWrapper.pas"/>
         <DCCReference Include="..\System.MHT.FileExtractor.pas"/>
+        <DCCReference Include="..\System.MHT.RecordingXML.pas"/>
+        <DCCReference Include="..\System.MHT.RecordingXMLToFile.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -166,6 +168,12 @@
                 <DeployFile LocalName="Win64\Debug\PSRWrapperVCL.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64">
                         <RemoteName>PSRWrapperVCL.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win64\Debug\PSRWrapperVCL.rsm" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win64">
+                        <RemoteName>PSRWrapperVCL.rsm</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

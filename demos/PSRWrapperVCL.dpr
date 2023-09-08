@@ -6,7 +6,9 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   System.PSRWrapper in '..\System.PSRWrapper.pas',
-  System.MHT.FileExtractor in '..\System.MHT.FileExtractor.pas';
+  System.MHT.FileExtractor in '..\System.MHT.FileExtractor.pas',
+  System.MHT.RecordingXML in '..\System.MHT.RecordingXML.pas',
+  System.MHT.RecordingXMLToFile in '..\System.MHT.RecordingXMLToFile.pas';
 
 {$R *.res}
 

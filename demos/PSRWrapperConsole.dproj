@@ -94,6 +94,8 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\System.PSRWrapper.pas"/>
+        <DCCReference Include="..\System.MHT.RecordingXML.pas"/>
+        <DCCReference Include="..\System.MHT.RecordingXMLToFile.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

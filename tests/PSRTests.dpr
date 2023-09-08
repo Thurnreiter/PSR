@@ -13,15 +13,16 @@ uses
   {$ENDIF }
   DUnitX.TestFramework,
   Test.MHT.Extractor in 'Test.MHT.Extractor.pas',
-  System.MHT.FileExtractor in '..\System.MHT.FileExtractor.pas';
+  System.MHT.FileExtractor in '..\System.MHT.FileExtractor.pas',
+  System.MHT.RecordingXML in '..\System.MHT.RecordingXML.pas',
+  Test.MHT.RecordingXML in 'Test.MHT.RecordingXML.pas',
+  System.MHT.RecordingXMLToFile in '..\System.MHT.RecordingXMLToFile.pas';
 
-{$IFNDEF TESTINSIGHT}
 var
   runner: ITestRunner;
   results: IRunResults;
   logger: ITestLogger;
   nunitLogger : ITestLogger;
-{$ENDIF}
 begin
 {$IFDEF TESTINSIGHT}
   TestInsight.DUnitX.RunRegisteredTests;

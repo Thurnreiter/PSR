@@ -189,4 +189,20 @@ object MainView: TMainView
     TabOrder = 10
     Text = ''
   end
+  object BtnOpen: TButton
+    Left = 56
+    Top = 414
+    Width = 75
+    Height = 25
+    Caption = 'Open'
+    TabOrder = 11
+    OnClick = BtnOpenClick
+  end
+  object OpenDialog: TOpenDialog
+    FileName = '*.zip'
+    Filter = 'MHT Zip (*.zip)|*.zip|All types (*.*)|*.*'
+    InitialDir = 'c:\Temp\002'
+    Left = 72
+    Top = 328
+  end
 end
