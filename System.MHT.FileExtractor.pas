@@ -42,6 +42,13 @@ type
     function Extract(): string;
   end;
 
+  TMHTFileExtractorFactory = class
+  public
+    class function GetInstance(): IMHTFileExtractor;
+  end;
+
+
+
 implementation
 
 uses
@@ -100,7 +107,7 @@ begin
     MhtFile := FFromFile;
   end;
 
-  ExtractMhtBoundary(TFile.ReadAllText(MhtFile));
+  ExtractMhtBoundary(TFile.ReadAllText(MhtFile, TEncoding.UTF8));
   Result := FExtractPath;
 end;
 
@@ -216,5 +223,12 @@ end;
 //    end;
 //  end;
 //end;
+
+{ TMHTFileExtractorFactory }
+
+class function TMHTFileExtractorFactory.GetInstance: IMHTFileExtractor;
+begin
+  Result := TMHTFileExtractor.Create;
+end;
 
 end.

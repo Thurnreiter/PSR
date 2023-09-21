@@ -3,6 +3,9 @@
         <ProjectGuid>{430619FB-232B-4369-A3C8-4099BC8E6406}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
+        <Projects Include="demos\PSRExtractorCon.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="demos\PSRWrapperConsole.dproj">
             <Dependencies/>
         </Projects>
@@ -20,6 +23,15 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="PSRExtractorCon">
+        <MSBuild Projects="demos\PSRExtractorCon.dproj"/>
+    </Target>
+    <Target Name="PSRExtractorCon:Clean">
+        <MSBuild Projects="demos\PSRExtractorCon.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PSRExtractorCon:Make">
+        <MSBuild Projects="demos\PSRExtractorCon.dproj" Targets="Make"/>
+    </Target>
     <Target Name="PSRWrapperConsole">
         <MSBuild Projects="demos\PSRWrapperConsole.dproj"/>
     </Target>
@@ -48,13 +60,13 @@
         <MSBuild Projects="tests\PSRTests.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="PSRWrapperConsole;PSRWrapperVCL;PSRTests"/>
+        <CallTarget Targets="PSRExtractorCon;PSRWrapperConsole;PSRWrapperVCL;PSRTests"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="PSRWrapperConsole:Clean;PSRWrapperVCL:Clean;PSRTests:Clean"/>
+        <CallTarget Targets="PSRExtractorCon:Clean;PSRWrapperConsole:Clean;PSRWrapperVCL:Clean;PSRTests:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="PSRWrapperConsole:Make;PSRWrapperVCL:Make;PSRTests:Make"/>
+        <CallTarget Targets="PSRExtractorCon:Make;PSRWrapperConsole:Make;PSRWrapperVCL:Make;PSRTests:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

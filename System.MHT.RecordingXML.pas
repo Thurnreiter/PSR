@@ -117,6 +117,7 @@ var
   AnyNode: IXMLNode;
   Actions: Integer;
   InnerFunc: TFunc<IXMLNode, string, string>;
+  i: Integer;
 begin
   OpenXmlDoc;
 
@@ -131,30 +132,38 @@ begin
 
     for var Idx: Integer := 0 to RecordSessionNode.ChildNodes.Count - 1 do
     begin
-      Result[Idx].ActionNumber := string(RecordSessionNode.ChildNodes[Idx].Attributes['ActionNumber']).ToInteger();
-      Result[Idx].Time := string(RecordSessionNode.ChildNodes[Idx].Attributes['Time']);
-      Result[Idx].FileVersion := string(RecordSessionNode.ChildNodes[Idx].Attributes['FileVersion']);
-      Result[Idx].FileName := string(RecordSessionNode.ChildNodes[Idx].Attributes['FileName']);
-      Result[Idx].CommandLine := string(RecordSessionNode.ChildNodes[Idx].Attributes['CommandLine']);
+      if Idx = 98 then
+        i := idx;
 
-      EachActionNodes := RecordSessionNode.ChildNodes[Idx];
+      try
+        Result[Idx].ActionNumber := string(RecordSessionNode.ChildNodes[Idx].Attributes['ActionNumber']).ToInteger();
+        Result[Idx].Time := string(RecordSessionNode.ChildNodes[Idx].Attributes['Time']);
+        if RecordSessionNode.ChildNodes[Idx].HasAttribute('FileVersion') then
+           Result[Idx].FileVersion := string(RecordSessionNode.ChildNodes[Idx].Attributes['FileVersion']);
 
-      InnerFunc :=
-        function(FromNodes: IXMLNode; ToSearch: string): string
-        begin
-          var InnerNode := GetRecursiveFirstSearchNode(FromNodes, ToSearch);
-          if (Assigned(InnerNode) and InnerNode.IsTextElement) then
+        Result[Idx].FileName := string(RecordSessionNode.ChildNodes[Idx].Attributes['FileName']);
+        Result[Idx].CommandLine := string(RecordSessionNode.ChildNodes[Idx].Attributes['CommandLine']);
+
+        EachActionNodes := RecordSessionNode.ChildNodes[Idx];
+
+        InnerFunc :=
+          function(FromNodes: IXMLNode; ToSearch: string): string
           begin
-            Result := InnerNode.Text;
-          end
-          else
-            Exit(string.Empty);
-        end;
+            var InnerNode := GetRecursiveFirstSearchNode(FromNodes, ToSearch);
+            if (Assigned(InnerNode) and InnerNode.IsTextElement) then
+            begin
+              Result := InnerNode.Text;
+            end
+            else
+              Exit(string.Empty);
+          end;
 
-      Result[Idx].Description := InnerFunc(EachActionNodes, Description);
-      Result[Idx].Action := InnerFunc(EachActionNodes, Action);
-      Result[Idx].ScreenshotFileName := InnerFunc(EachActionNodes, ScreenshotFileName);
-
+        Result[Idx].Description := InnerFunc(EachActionNodes, Description);
+        Result[Idx].Action := InnerFunc(EachActionNodes, Action);
+        Result[Idx].ScreenshotFileName := InnerFunc(EachActionNodes, ScreenshotFileName);
+      except
+        i := Idx;
+      end;
 //      AnyNode := GetRecursiveFirstSearchNode(EachActionNodes, Description);
 //      if (Assigned(AnyNode) and AnyNode.IsTextElement) then
 //      begin
